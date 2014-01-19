@@ -11,6 +11,15 @@
 button_size = 90
 button_gap = 20
 button_offset = button_gap+button_size/2
+flash_delay = 500
+
+local soundTable = {
+
+    saw1 = audio.loadSound( "green.wav" ),
+    saw2 = audio.loadSound( "blue.wav" ),
+    saw3 = audio.loadSound( "yellow.wav" ),
+    saw4 = audio.loadSound( "red.wav" )
+}
 
 local greenButton = display.newRect( button_offset, button_offset, button_size, button_size)
 
@@ -26,6 +35,7 @@ end
 
 function flashGreen()
     brightGreen()
+    audio.play( soundTable["saw1"] )
     timer.performWithDelay(200, dimGreen )    
 end
 
@@ -50,6 +60,7 @@ end
 
 function flashBlue()
     brightBlue()
+    audio.play( soundTable["saw2"] )
     timer.performWithDelay(200, dimBlue )    
 end
 
@@ -73,6 +84,7 @@ end
 
 function flashYellow()
     brightYellow()
+    audio.play( soundTable["saw3"] )
     timer.performWithDelay(200, dimYellow )    
 end
 
@@ -96,6 +108,7 @@ end
 
 function flashRed()
     brightRed()
+    audio.play( soundTable["saw4"] )
     timer.performWithDelay(200, dimRed )    
 end
 
@@ -104,11 +117,38 @@ function redTap()
 end
 
 redButton:addEventListener( "tap", redTap )
+
+function flashColour(delay,colour)
+   if colour=="Green" then
+           timer.performWithDelay(delay, flashGreen)
+       elseif colour=="Blue" then
+           timer.performWithDelay(delay, flashBlue)
+       elseif colour=="Yellow" then
+           timer.performWithDelay(delay, flashYellow)
+       else
+           timer.performWithDelay(delay, flashRed)
+    end
+end
+
+function newtestSequence()
+    colours={"Green","Blue","Yellow","Red"}
+    for i, colour in ipairs(colours) do
+        flashColour(i*flash_delay,colour)
+   end
+end
+
+function oldtestSequence()
+    --timer.performWithDelay(500, flashColour("Green") )
+    --timer.performWithDelay(1000, flashColour("Blue") )
+    --timer.performWithDelay(1500, flashColour("Yellow") )
+    flashColour(2000,"Red")
+end
+
+function testSequence()
     timer.performWithDelay(500, flashGreen )
     timer.performWithDelay(1000, flashBlue )
     timer.performWithDelay(1500, flashYellow )
     timer.performWithDelay(2000, flashRed )
-function playSequence()
-    
 end
-playSequence()
+
+newtestSequence()
