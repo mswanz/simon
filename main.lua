@@ -8,11 +8,13 @@
 
 -- Your code here
 
+--set the size of the buttons and the flash delay
 button_size = 90
 button_gap = 20
 button_offset = button_gap+button_size/2
 flash_delay = 500
 
+--set the sounds
 local soundTable = {
 
     saw1 = audio.loadSound( "green.wav" ),
@@ -21,18 +23,20 @@ local soundTable = {
     saw4 = audio.loadSound( "red.wav" )
 }
 
+--set up the green button
 local greenButton = display.newRect( button_offset, button_offset, button_size, button_size)
 
+--make the green button green
 function dimGreen()
     greenButton:setFillColor( 0, .5, 0 )   
 end
 
 dimGreen()
-
+--light up the green button
 function brightGreen()
     greenButton:setFillColor( 0, 1, 0 )   
 end
-
+--make the green mutton beep at the same time as the flash
 function flashGreen()
     brightGreen()
     audio.play( soundTable["saw1"] )
@@ -118,6 +122,7 @@ end
 
 redButton:addEventListener( "tap", redTap )
 
+--flashes the colour that its passed
 function flashColour(delay,colour)
    if colour=="Green" then
            timer.performWithDelay(delay, flashGreen)
@@ -130,6 +135,7 @@ function flashColour(delay,colour)
     end
 end
 
+--flash each colour in turn
 function newtestSequence()
     colours={"Green","Blue","Yellow","Red"}
     for i, colour in ipairs(colours) do
@@ -143,7 +149,7 @@ function oldtestSequence()
     --timer.performWithDelay(1500, flashColour("Yellow") )
     flashColour(2000,"Red")
 end
-
+-- preform the test sequence
 function testSequence()
     timer.performWithDelay(500, flashGreen )
     timer.performWithDelay(1000, flashBlue )
